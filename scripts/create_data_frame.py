@@ -17,7 +17,7 @@ if __name__ == '__main__':
   sqlContext = SQLContext(sc)
 
   #  laod file
-  lines = sc.textFile("/home/cloudera/try_spark/spark_try/data/users.csv")
+  lines = sc.textFile("users.csv")
   # create the part for each line, colsep="\t" (with regexp)
   parts = lines.map(lambda line: re.split(r'\t', line))
 
