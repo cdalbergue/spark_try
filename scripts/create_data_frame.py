@@ -16,20 +16,57 @@ if __name__ == '__main__':
   # create sql context
   sqlContext = SQLContext(sc)
 
+  # #  laod file
+  # lines = sc.textFile("users.csv")
+  # # create the part for each line, colsep="\t" (with regexp)
+  # parts = lines.map(lambda line: re.split(r'\t', line))
+
+  # # map each line
+  # # UserID,Gender,Age,Occupation,Zip-code
+  # users = parts.map(lambda array: Row(userid=array[0], gender=array[1], age=int(array[2]), occupation=array[3], zipcode=str(array[4])))
+
+  # # map each line
+  # schemaUser = sqlContext.createDataFrame(users)
+
+  # # create a temporary table
+  # schemaUser.registerTempTable("users")
+
+  # # create parquet
+  # schemaUser.write.parquet("users.parquet")
+
   #  laod file
-  lines = sc.textFile("users.csv")
+  lines = sc.textFile("ratings.csv")
   # create the part for each line, colsep="\t" (with regexp)
   parts = lines.map(lambda line: re.split(r'\t', line))
 
   # map each line
   # UserID,Gender,Age,Occupation,Zip-code
-  users = parts.map(lambda array: Row(userid=array[0], gender=array[1], age=int(array[2]), occupation=array[3], zipcode=str(array[4])))
+  users = parts.map(lambda array: Row(userid=array[0], movieid=array[1], rating=int(array[2]), timestamp=array[3]))
 
   # map each line
   schemaUser = sqlContext.createDataFrame(users)
 
   # create a temporary table
-  schemaUser.registerTempTable("users")
+  schemaUser.registerTempTable("ratings")
 
   # create parquet
-  schemaUser.write.parquet("users.parquet")
+  schemaUser.write.parquet("ratings.parquet")
+
+
+  #  laod file
+  lines = sc.textFile("movies.csv")
+  # create the part for each line, colsep="\t" (with regexp)
+  parts = lines.map(lambda line: re.split(r'\t', line))
+
+  # map each line
+  # UserID,Gender,Age,Occupation,Zip-code
+  users = parts.map(lambda array: Row(movieed=array[0], title=array[1], genre=int(array[2])))
+
+  # map each line
+  schemaUser = sqlContext.createDataFrame(users)
+
+  # create a temporary table
+  schemaUser.registerTempTable("movies")
+
+  # create parquet
+  schemaUser.write.parquet("movies.parquet")
