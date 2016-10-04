@@ -24,6 +24,6 @@ if __name__ == '__main__':
   parquetFile.registerTempTable("temp_movies");
   number_of_movies = sqlContext.sql("SELECT count(*) FROM temp_movies")
   number_of_movies = number_of_movies.map(lambda p: "count: " + p._c0)
-
+  number_of_movies.printSchema()
   print(number_of_movies)
 
