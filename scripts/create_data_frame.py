@@ -5,7 +5,7 @@ import re
 sqlContext = SQLContext(sc)
 
 #  laod file
-lines = sc.textFile("/home/cloudera/users.csv")
+lines = sc.textFile("../data/users.csv")
 # create the part for each line, colsep="\t" (with regexp)
 parts = lines.map(lambda line: re.split(r'\t', line))
 
