@@ -27,20 +27,20 @@ if __name__ == '__main__':
   parquetFileRatings = sqlContext.read.parquet("ratings.parquet")
   parquetFileRatings.registerTempTable("ratings");
 
-  query = "select ratings.userid,"+
-        "count(*) AS `TOTAL`,"+
-        "sum(case rating when 5 then 1 else 0 end) AS `5 STARS`,"+
-        "sum(case rating when 4 then 1 else 0 end) AS `4 STARS`,"+
-        "sum(case rating when 3 then 1 else 0 end) AS `3 STARS`,"+
-        "sum(case rating when 2 then 1 else 0 end) AS `2 STARS`,"+
-        "sum(case rating when 1 then 1 else 0 end) AS `1 STARS`,"+
-        "mean(rating) AS `MOY STARS`,"+
-        "count(rating)/12 AS `moy_months`,"+
-        "users.age,"+
-        "case gender when 'M' then 0 else 1 end"+
-        "from ratings"+
-        "left join users on users.userid = ratings.userid"+
-        "group by userid, age, gender"
+  query = """select ratings.userid,
+        count(*) AS `TOTAL`,
+        sum(case rating when 5 then 1 else 0 end) AS `5 STARS`,
+        sum(case rating when 4 then 1 else 0 end) AS `4 STARS`,
+        sum(case rating when 3 then 1 else 0 end) AS `3 STARS`,
+        sum(case rating when 2 then 1 else 0 end) AS `2 STARS`,
+        sum(case rating when 1 then 1 else 0 end) AS `1 STARS`,
+        mean(rating) AS `MOY STARS`,
+        count(rating)/12 AS `moy_months`,
+        users.age,
+        case gender when 'M' then 0 else 1 end
+        from ratings
+        left join users on users.userid = ratings.userid
+        group by userid, age, gender"""
 
   knn_data = sqlContext.sql(query)
   knn_df = sqlContext.createDataFrame(knn_data)
