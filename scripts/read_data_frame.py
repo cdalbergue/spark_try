@@ -22,6 +22,6 @@ if __name__ == '__main__':
   print("##############################################################################################################")
   print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
   parquetFile.registerTempTable("temp_movies");
-  number_of_movies = sqlContext.sql("SELECT count(*) FROM parquetFile;")
+  number_of_movies = sqlContext.sql("SELECT count(*) FROM temp_movies;")
   print(number_of_movies)
 
