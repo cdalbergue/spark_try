@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
   parquetFileRatings = sqlContext.read.parquet("ratings.parquet")
   parquetFileRatings.registerTempTable("ratings");
-  
+
   number_of_movies = sqlContext.sql("SELECT count(*) FROM users").collect()
   print("##############################################################################################################")
   print("################# Number of movies ###########################################################################")
@@ -45,7 +45,7 @@ if __name__ == '__main__':
   for line in number_of_moves_rated_by_user.collect():
     print(line)
 
-  number_of_movies_rated_by_user_by_months = sqlContext.sql("SELECT users.userid, month('ratings.timestamp'), count(*) FROM users LEFT JOIN ratings on users.userid = ratings.userid GROUP BY userid, month('ratings.timestamp')")
+  number_of_movies_rated_by_user_by_months = sqlContext.sql("SELECT users.userid, month('ratings.timestamp'), count(*) FROM users LEFT JOIN ratings on users.userid = ratings.userid GROUP BY users.userid, month('ratings.timestamp')")
   print("##############################################################################################################")
   print("################# number_of_movies_rated_by_user_by_months ###########################################################################")
   for line in number_of_movies_rated_by_user_by_months.collect():
