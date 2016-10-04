@@ -18,9 +18,16 @@ if __name__ == '__main__':
 
   # Read in the Parquet file created above. Parquet files are self-describing so the schema is preserved.
   # The result of loading a parquet file is also a DataFrame.
-  parquetFile = sqlContext.read.parquet("users.parquet")
-  parquetFile.registerTempTable("temp_movies");
-  number_of_movies = sqlContext.sql("SELECT count(*) FROM temp_movies").collect()
+  parquetFileUsers = sqlContext.read.parquet("users.parquet")
+  parquetFileUsers.registerTempTable("users");
+
+  parquetFileMovies = sqlContext.read.parquet("movies.parquet")
+  parquetFileMovies.registerTempTable("movies");
+
+  parquetFileRatings = sqlContext.read.parquet("ratings.parquet")
+  parquetFileRatings.registerTempTable("ratings");
+  
+  number_of_movies = sqlContext.sql("SELECT count(*) FROM users").collect()
   print("##############################################################################################################")
   print("################# Number of movies ###########################################################################")
   for line in number_of_movies:
