@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
   # map each line
   # UserID,Gender,Age,Occupation,Zip-code
-  users = parts.map(lambda array: Row(movieed=array[0], title=array[1], genre=int(array[2])))
+  users = parts.map(lambda array: Row(movieed=array[0], title=array[1], genre=array[2]))
 
   # map each line
   schemaUser = sqlContext.createDataFrame(users)
