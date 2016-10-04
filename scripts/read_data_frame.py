@@ -20,9 +20,56 @@ if __name__ == '__main__':
   # The result of loading a parquet file is also a DataFrame.
   parquetFile = sqlContext.read.parquet("users.parquet")
   parquetFile.registerTempTable("temp_movies");
-  number_of_movies = sqlContext.sql("SELECT count(*) AS `count` FROM temp_movies").collect()
-  #number_of_movies = number_of_movies.map(lambda p: "count: " + p.count)
+  number_of_movies = sqlContext.sql("SELECT count(*) FROM temp_movies").collect()
   print("##############################################################################################################")
-  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-  print(number_of_movies)
+  print("################# Number of movies ###########################################################################")
+  for line in number_of_movies:
+    print(line)
 
+  number_of_movies_rated_by_months = sqlContext.sql("SELECT month('timestamp'), count(*) FROM ratings GROUP BY month('timestamp')")
+  print("##############################################################################################################")
+  print("################# number_of_movies_rated_by_months ###########################################################################")
+  for line in number_of_movies_rated_by_months.collect():
+    print(line)
+  
+  number_of_moves_rated_by_user = sqlContext.sql("SELECT userid, count(*) FROM ratings GROUP BY userid")
+  print("##############################################################################################################")
+  print("################# number_of_moves_rated_by_user ###########################################################################")
+  for line in number_of_moves_rated_by_user.collect():
+    print(line)
+
+  number_of_movies_rated_by_user_by_months = sqlContext.sql("SELECT users.userid, month('ratings.timestamp'), count(*) FROM users LEFT JOIN ratings on users.userid = ratings.userid GROUP BY userid, month('ratings.timestamp')")
+  print("##############################################################################################################")
+  print("################# number_of_movies_rated_by_user_by_months ###########################################################################")
+  for line in number_of_movies_rated_by_user_by_months.collect():
+    print(line)
+  
+  mean_rating_by_movie = sqlContext.sql("SELECT movieid, mean(rating) FROM ratings GROUP BY movieid")
+  print("##############################################################################################################")
+  print("################# mean_rating_by_movie ###########################################################################")
+  for line in mean_rating_by_movie.collect():
+    print(line)
+
+  mean_rating_by_movie_by_gender = sqlContext.sql("SELECT movieid, users.gender, mean(rating) FROM ratings LEFT JOIN users on ratings.userid = users.userid GROUP BY movieid, users.gender")
+  print("##############################################################################################################")
+  print("################# mean_rating_by_movie ###########################################################################")
+  for line in mean_rating_by_movie.collect():
+    print(line)
+
+  mean_rating_by_user = sqlContext.sql("SELECT userid, mean(rating) FROM ratings GROUP BY userid")
+  print("##############################################################################################################")
+  print("################# mean_rating_by_user ###########################################################################")
+  for line in mean_rating_by_user.collect():
+    print(line)
+
+  mean_rating_by_user_by_months = sqlContext.sql("SELECT userid, mean(rating), month('timestamp') FROM ratings GROUP BY userid, month('timestamp')")
+  print("##############################################################################################################")
+  print("################# mean_rating_by_user_by_months ###########################################################################")
+  for line in mean_rating_by_user_by_months.collect():
+    print(line)
+
+  top_ten_voters = sqlContext.sql("SELECT userid, count(rating) FROM ratings GROUP BY count(rating) LIMIT 10")
+  print("##############################################################################################################")
+  print("################# top_ten_voters ###########################################################################")
+  for line in top_ten_voters.collect():
+    print(line)
