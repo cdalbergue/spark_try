@@ -43,6 +43,6 @@ if __name__ == '__main__':
         group by ratings.userid, age, gender"""
 
   knn_data = sqlContext.sql(query)
-  knn_df = sqlContext.createDataFrame(knn_data)
+  #knn_df = sqlContext.createDataFrame(knn_data)
   knn_df.registerTempTable("knn_data")
   knn_df.write.parquet("knn_data.parquet")
