@@ -75,7 +75,7 @@ if __name__ == '__main__':
   for line in mean_rating_by_user_by_months.collect():
     print(line)
 
-  top_ten_voters = sqlContext.sql("SELECT userid, count(rating) FROM ratings GROUP BY count(rating) LIMIT 10")
+  top_ten_voters = sqlContext.sql("SELECT userid, count(rating) AS `nb_votes` FROM ratings GROUP BY userid ORDER BY DESC(nb_votes) LIMIT 10")
   print("##############################################################################################################")
   print("################# top_ten_voters ###########################################################################")
   for line in top_ten_voters.collect():
