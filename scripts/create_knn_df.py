@@ -40,7 +40,7 @@ if __name__ == '__main__':
         case gender when 'M' then 0 else 1 end
         from ratings
         left join users on users.userid = ratings.userid
-        group by userid, age, gender"""
+        group by ratings.userid, age, gender"""
 
   knn_data = sqlContext.sql(query)
   knn_df = sqlContext.createDataFrame(knn_data)
