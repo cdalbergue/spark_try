@@ -16,23 +16,23 @@ if __name__ == '__main__':
   # create sql context
   sqlContext = SQLContext(sc)
 
-  # #  laod file
-  # lines = sc.textFile("users.csv")
-  # # create the part for each line, colsep="\t" (with regexp)
-  # parts = lines.map(lambda line: re.split(r'\t', line))
+  #  laod file
+  lines = sc.textFile("users.csv")
+  # create the part for each line, colsep="\t" (with regexp)
+  parts = lines.map(lambda line: re.split(r'\t', line))
 
-  # # map each line
-  # # UserID,Gender,Age,Occupation,Zip-code
-  # users = parts.map(lambda array: Row(userid=array[0], gender=array[1], age=int(array[2]), occupation=array[3], zipcode=str(array[4])))
+  # map each line
+  # UserID,Gender,Age,Occupation,Zip-code
+  users = parts.map(lambda array: Row(userid=array[0], gender=array[1], age=int(array[2]), occupation=array[3], zipcode=str(array[4])))
 
-  # # map each line
-  # schemaUser = sqlContext.createDataFrame(users)
+  # map each line
+  schemaUser = sqlContext.createDataFrame(users)
 
-  # # create a temporary table
-  # schemaUser.registerTempTable("users")
+  # create a temporary table
+  schemaUser.registerTempTable("users")
 
-  # # create parquet
-  # schemaUser.write.parquet("users.parquet")
+  # create parquet
+  schemaUser.write.parquet("users.parquet")
 
   #  laod file
   lines = sc.textFile("ratings.csv")
@@ -41,16 +41,16 @@ if __name__ == '__main__':
 
   # map each line
   # UserID,Gender,Age,Occupation,Zip-code
-  users = parts.map(lambda array: Row(userid=array[0], movieid=array[1], rating=int(array[2]), timestamp=array[3]))
+  ratings = parts.map(lambda array: Row(userid=array[0], movieid=array[1], rating=int(array[2]), timestamp=array[3]))
 
   # map each line
-  schemaUser = sqlContext.createDataFrame(users)
+  schemaRatings = sqlContext.createDataFrame(ratings)
 
   # create a temporary table
-  schemaUser.registerTempTable("ratings")
+  schemaRatings.registerTempTable("ratings")
 
   # create parquet
-  schemaUser.write.parquet("ratings.parquet")
+  schemaRatings.write.parquet("ratings.parquet")
 
 
   #  laod file
@@ -60,13 +60,13 @@ if __name__ == '__main__':
 
   # map each line
   # UserID,Gender,Age,Occupation,Zip-code
-  users = parts.map(lambda array: Row(movieed=array[0], title=array[1], genre=array[2]))
+  movies = parts.map(lambda array: Row(movieed=array[0], title=array[1], genre=array[2]))
 
   # map each line
-  schemaUser = sqlContext.createDataFrame(users)
+  schemaMovies = sqlContext.createDataFrame(movies)
 
   # create a temporary table
-  schemaUser.registerTempTable("movies")
+  schemaMovies.registerTempTable("movies")
 
   # create parquet
-  schemaUser.write.parquet("movies.parquet")
+  schemaMovies.write.parquet("movies.parquet")
