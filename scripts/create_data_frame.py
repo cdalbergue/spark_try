@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from pyspark import SparkContext
 from pyspark import SparkConf
 from pyspark.sql import SQLContext
