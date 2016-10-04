@@ -20,8 +20,8 @@ if __name__ == '__main__':
   # The result of loading a parquet file is also a DataFrame.
   parquetFile = sqlContext.read.parquet("users.parquet")
   parquetFile.registerTempTable("temp_movies");
-  number_of_movies = sqlContext.sql("SELECT count(*) AS `count` FROM temp_movies")
-  number_of_movies = number_of_movies.map(lambda p: "count: " + p.count).collect()
+  number_of_movies = sqlContext.sql("SELECT count(*) AS `count` FROM temp_movies").collect()
+  #number_of_movies = number_of_movies.map(lambda p: "count: " + p.count)
   print("##############################################################################################################")
   print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
   print(number_of_movies)
