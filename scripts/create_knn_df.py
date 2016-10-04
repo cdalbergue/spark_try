@@ -29,12 +29,12 @@ if __name__ == '__main__':
 
   query = """select ratings.userid,
         count(*) AS `TOTAL`,
-        sum(case rating when 5 then 1 else 0 end) AS `5 STARS`,
-        sum(case rating when 4 then 1 else 0 end) AS `4 STARS`,
-        sum(case rating when 3 then 1 else 0 end) AS `3 STARS`,
-        sum(case rating when 2 then 1 else 0 end) AS `2 STARS`,
-        sum(case rating when 1 then 1 else 0 end) AS `1 STARS`,
-        mean(rating) AS `MOY STARS`,
+        sum(case rating when 5 then 1 else 0 end) AS `5_STARS`,
+        sum(case rating when 4 then 1 else 0 end) AS `4_STARS`,
+        sum(case rating when 3 then 1 else 0 end) AS `3_STARS`,
+        sum(case rating when 2 then 1 else 0 end) AS `2_STARS`,
+        sum(case rating when 1 then 1 else 0 end) AS `1_STARS`,
+        mean(rating) AS `MOY_STARS`,
         count(rating)/12 AS `moy_months`,
         users.age,
         case gender when 'M' then 0 else 1 end
