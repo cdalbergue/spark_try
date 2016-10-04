@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from pyspark import SparkContext
 from pyspark import SparkConf
-from pyspark.sql import SQLContext
+from pyspark.sql import SQLContext, Row
 # import regex
 import re
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
   # map each line
   # UserID,Gender,Age,Occupation,Zip-code
-  users = parts.map(lambda array: Row(userid=array[0], gender=array[1], age=int(array[2]), occupation=array[3], zipcode=string(array[4])))
+  users = parts.map(lambda array: Row(userid=array[0], gender=array[1], age=int(array[2]), occupation=array[3], zipcode=str(array[4])))
 
   # map each line
   schemaUser = sqlContext.createDataFrame(users)
