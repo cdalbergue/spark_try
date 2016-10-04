@@ -42,7 +42,7 @@ if __name__ == '__main__':
         left join users on users.userid = ratings.userid
         group by ratings.userid, age, gender"""
 
-  knn_data = sqlContext.sql(query)
+  knn_df = sqlContext.sql(query)
   #knn_df = sqlContext.createDataFrame(knn_data)
   knn_df.registerTempTable("knn_data")
   knn_df.write.parquet("knn_data.parquet")
